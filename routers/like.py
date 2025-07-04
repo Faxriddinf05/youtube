@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import delete
-
 from models.like import Like
 from models.video import Video
 from models.user import User
@@ -25,7 +24,7 @@ async def like_bosish(
 ):
     try:
         await create_like(form, db, current_user)
-        return {"message": "Like qoshildi."}
+        return {"message": "Like qo'shildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -41,7 +40,7 @@ async def like_korish(
         result = korish.scalars().all()
 
         if not result:
-            raise HTTPException(404, "Like topilmadi")
+            raise HTTPException(404, "Like topilmadi !")
 
         like = (
             select(
@@ -83,7 +82,7 @@ async def like_ochirish(
         result = korish.scalar()
 
         if not result:
-            raise HTTPException(404, "Sizda bunday like mavjud emas.")
+            raise HTTPException(404, "Sizda bunday like mavjud emas !")
 
         if result.is_like:
             video_query = await db.execute(
@@ -99,7 +98,7 @@ async def like_ochirish(
             delete(Like).where(Like.id == ident, Like.user_id == current_user.id)
         )
         await db.commit()
-        return {"message": "Like ochirildi."}
+        return {"message": "Like o'chirildi."}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}

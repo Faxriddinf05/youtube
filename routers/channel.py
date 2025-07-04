@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, UploadFile, HTTPException
 from sqlalchemy import delete
-
 from sqlalchemy.future import select
 from utils.database import database
 from models.channel import Channel
@@ -29,35 +28,35 @@ async def kanal_yaratish(
 ):
     try:
         await create_channel(form, db, current_user)
-        return {"message": "Kanal yaratildi."}
+        return {"message": "Kanal ochildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
 
 
 @channel_router.post("/post_profile_image")
-async def rasim_yuklash_profilga(
+async def rasm_yuklash_profilga(
     image: UploadFile,
     db: AsyncSession = Depends(database),
     current_user: SchemasUser = Depends(get_current_active_user),
 ):
     try:
         await create_photo(image, db, current_user)
-        return {"message": "Rasim yuklandi"}
+        return {"message": "Rasm yuklandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
 
 
 @channel_router.post("/post_banner_image")
-async def rasim_yuklash_bannerga(
+async def rasm_yuklash_bannerga(
     image: UploadFile,
     db: AsyncSession = Depends(database),
     current_user: SchemasUser = Depends(get_current_active_user),
 ):
     try:
         await create_photo_banner(image, db, current_user)
-        return {"message": "Rasim yuklandi"}
+        return {"message": "Rasm yuklandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -75,7 +74,7 @@ async def kanal_korish(
         result = user.scalar()
 
         if not result:
-            raise HTTPException(404, "Kanal topilmadi")
+            raise HTTPException(404, "Kanal topilmadi !")
 
         return ChannelResponse(
             id=result.id,
@@ -106,7 +105,7 @@ async def kanalni_korish_barchaga(
         result = channel.scalar_one_or_none()
 
         if not result:
-            raise HTTPException(404, "Bunday kanal mavjud emas.")
+            raise HTTPException(404, "Bunday kanal mavjud emas !")
 
         return ScemasChannelResponse.from_orm(result)
 
@@ -122,35 +121,35 @@ async def kanal_tahrirlash(
 ):
     try:
         await update_channel(form, db, current_user)
-        return {"message": "Kanal tahrirlandi."}
+        return {"message": "Kanal tahrirlandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
 
 
 @channel_router.put("/put_profile_image")
-async def rasim_tahrirlash_prifile(
+async def rasm_tahrirlash_profilga(
     image: UploadFile,
     db: AsyncSession = Depends(database),
     current_user: SchemasUser = Depends(get_current_active_user),
 ):
     try:
         await update_profile_image(image, db, current_user)
-        return {"message": "Rasim tahrirlandi."}
+        return {"message": "Rasm tahrirlandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
 
 
 @channel_router.put("/put_banner_image")
-async def rasim_tahrirlash_banner(
+async def rasm_tahrirlash_banner(
     image: UploadFile,
     db: AsyncSession = Depends(database),
     current_user: SchemasUser = Depends(get_current_active_user),
 ):
     try:
         await update_banner_image(image, db, current_user)
-        return {"message": "Rasim tahrirlandi."}
+        return {"message": "Rasim tahrirlandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -164,7 +163,7 @@ async def kanal_ochirish(
     try:
         await db.execute(delete(Channel).where(Channel.user_id == current_user.id))
         await db.commit()
-        return {"message": "Kanal ochirildi."}
+        return {"message": "Kanal o'chirildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}

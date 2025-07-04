@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import delete
-
 from models.comment import Comment
 from models.video import Video
 from models.user import User
@@ -24,7 +23,7 @@ async def izoh_yozish(
 ):
     try:
         await create_comment(form, db, current_user)
-        return {"message": "Izoh yozildi."}
+        return {"message": "Izoh yozildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -70,7 +69,7 @@ async def izoh_tahrirlash(
 ):
     try:
         await update_comment(form, db, current_user)
-        return {"message": "Izoh tahrirlandi."}
+        return {"message": "Izoh tahrirlandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -87,7 +86,7 @@ async def izoh_ochirish(
 
         await db.execute(delete(Comment).where(Comment.id == comment_id))
         await db.commit()
-        return {"message": "Izoh ochirildi."}
+        return {"message": "Izoh o'chirildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}

@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import delete, update
-
 from sqlalchemy.future import select
 from utils.database import database
 from models.subscription import Subscription
@@ -28,7 +27,7 @@ async def obuna_bolish(
 ):
     try:
         await create_subscription(form, db, current_user)
-        return {"message": "Obuna boldingiz."}
+        return {"message": "Obuna bo'ldingiz !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -57,7 +56,7 @@ async def obuna_bolgan_kanallarim(
 
         data = result.all()
         if not data:
-            raise HTTPException(404, "Siz hech qanday kanalga obuna emassiz.")
+            raise HTTPException(404, "Siz hech qanday kanalga obuna emassiz !")
 
         return [SubscriptionResponse(**row._mapping) for row in data]
 
@@ -112,10 +111,10 @@ async def obuna_ochirish(
         subscription = result.scalar_one_or_none()
 
         if not subscription:
-            raise HTTPException(404, "Obuna topilmadi.")
+            raise HTTPException(404, "Obuna topilmadi !")
 
         if subscription.subscriber_id != current_user.id:
-            raise HTTPException(403, "Ruxsat yo'q.")
+            raise HTTPException(403, "Ruxsat yo'q !")
 
         await db.execute(delete(Subscription).where(Subscription.id == ident))
 
@@ -126,7 +125,7 @@ async def obuna_ochirish(
         )
 
         await db.commit()
-        return {"message": "Obuna bekor qilindi."}
+        return {"message": "Obuna bekor qilindi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}

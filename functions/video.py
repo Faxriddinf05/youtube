@@ -17,7 +17,7 @@ async def create_vidyo(form, vidyo, db, current_user):
     )
     result = chennel.scalar()
     if not result:
-        raise HTTPException(404, "Bunday kanal mavjud emas.")
+        raise HTTPException(404, "Bunday kanal mavjud emas !")
 
     video_path, thumbnail_path = await video_upload(vidyo)
 
@@ -43,13 +43,13 @@ async def update_video(form, db, current_user):
     result = channel.scalar()
 
     if result is None:
-        raise HTTPException(400, "Sizning kanal topilmadi. Avval kanal yarating.")
+        raise HTTPException(400, "Sizning kanalingiz topilmadi, avval kanal yarating !")
 
     video = await db.execute(select(Video).where(Video.channel_id == result.id))
     video_result = video.scalar()
 
     if video_result is None:
-        raise HTTPException(404, "Sizning videongiz topilmadi.")
+        raise HTTPException(404, "Sizning videongiz topilmadi !")
 
     await db.execute(
         update(Video)

@@ -17,7 +17,7 @@ async def create_channel(form, db, current_user):
     result = channel.scalar()
 
     if result:
-        raise HTTPException(400, "Siz allaqachon kanal yaratgansiz.")
+        raise HTTPException(400, "Siz allaqachon kanal ochgansiz !")
 
     now = datetime.now(timezone.utc)
 

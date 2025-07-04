@@ -8,7 +8,7 @@ from routers.video import video_router
 from routers.like import like_router
 from routers.comment import comment_router
 from routers.history import history_router
-from routers.palylist import playlist_router
+from routers.playlist import playlist_router
 from routers.playlist_video import playlist_video_router
 from routers.shorts import shorts_router
 from routers.auth import login_router

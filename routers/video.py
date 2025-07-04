@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends, UploadFile, HTTPException, File
-
 from sqlalchemy import update, delete, literal_column
 from sqlalchemy.future import select
 from utils.database import database
@@ -24,7 +23,7 @@ async def video_qoshish(
 ):
     try:
         await create_vidyo(form, vidyo, db, current_user)
-        return {"message": "Video yuklandi."}
+        return {"message": "Video yuklandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -57,7 +56,7 @@ async def meni_videolarim(
 
         rows = result.all()
         if not rows:
-            raise HTTPException(404, "Video topilmadi.")
+            raise HTTPException(404, "Video topilmadi !")
 
         return [VidyoResponse(**row._mapping) for row in rows]
 
@@ -73,7 +72,7 @@ async def videolar_korish(
         if ident:
             video_check = await db.execute(select(Video.id).where(Video.id == ident))
             if not video_check.scalar():
-                raise HTTPException(404, "Bunday video mavjud emas.")
+                raise HTTPException(404, "Bunday video mavjud emas !")
 
             await db.execute(
                 update(Video)
@@ -110,7 +109,7 @@ async def videolar_korish(
         if ident:
             row = result.first()
             if not row:
-                raise HTTPException(404, "Video topilmadi.")
+                raise HTTPException(404, "Video topilmadi !")
             return VidyoResponse(**row._mapping)
 
         rows = result.all()
@@ -128,7 +127,7 @@ async def video_tahrirlash(
 ):
     try:
         await update_video(form, db, current_user)
-        return {"message": "Video tahrirlasndi."}
+        return {"message": "Video tahrirlandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -147,7 +146,7 @@ async def video_ochirish(
         kanal_result = kanal.scalar()
 
         if not kanal_result:
-            raise HTTPException(404, "Sizning kanal topilmadi.")
+            raise HTTPException(404, "Sizning kanalingiz topilmadi !")
 
         video = await db.execute(
             select(Video).where(
@@ -158,12 +157,12 @@ async def video_ochirish(
 
         if not result:
             raise HTTPException(
-                404, "Bunday video sizga tegishli emas yoki mavjud emas."
+                404, "Bunday video sizga tegishli emas yoki mavjud emas !"
             )
 
         await db.execute(delete(Video).where(Video.id == video_id))
         await db.commit()
-        return {"message": "Video ochirildi."}
+        return {"message": "Video o'chirildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}

@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from sqlalchemy import update
-
 from sqlalchemy.future import select
 from models.comment import Comment
 from models.video import Video

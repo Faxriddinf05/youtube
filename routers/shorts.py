@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
 from sqlalchemy import delete
-
 from models.shorts import Shorts
 from models.channel import Channel
 from schemas.user import SchemasUser
@@ -14,21 +13,21 @@ shorts_router = APIRouter()
 
 
 @shorts_router.post("/post_shorts")
-async def shorts_vidyo_qoshish(
+async def shorts_video_qoshish(
     video: UploadFile = File(...),
     db: AsyncSession = Depends(database),
     current_user: SchemasUser = Depends(get_current_active_user),
 ):
     try:
         await create_shorts(video, db, current_user)
-        return {"message": "Shorts qoshildi."}
+        return {"message": "Shorts qo'shildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
 
 
 @shorts_router.get("/get_shorts")
-async def shorts_vidyo_korish(db: AsyncSession = Depends(database)):
+async def shorts_video_korish(db: AsyncSession = Depends(database)):
     try:
         shorts = (
             select(
@@ -72,7 +71,7 @@ async def shorts_ochirish(
         user_channel = channel_result.scalar()
 
         if not user_channel:
-            raise HTTPException(400, "Sizda kanal mavjud emas.")
+            raise HTTPException(400, "Sizda kanal mavjud emas !")
 
         shorts_result = await db.execute(
             select(Shorts).where(
@@ -85,12 +84,12 @@ async def shorts_ochirish(
         if not shorts:
             raise HTTPException(
                 404,
-                "Sizda ushbu ID raqamli video mavjud emas yoki sizga tegishli emas.",
+                "Sizda ushbu ID raqamli video mavjud emas yoki sizga tegishli emas !",
             )
 
         await db.execute(delete(Shorts).where(Shorts.id == ident))
         await db.commit()
-        return {"message": "Shorts muvaffaqiyatli o'chirildi."}
+        return {"message": "Shorts muvaffaqiyatli o'chirildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}

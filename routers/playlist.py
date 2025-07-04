@@ -22,7 +22,7 @@ async def playlist_yaratish(
 ):
     try:
         await create_playlist(form, db, current_user)
-        return {"message": "Playlist yaratildi."}
+        return {"message": "Playlist yaratildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -60,7 +60,7 @@ async def faqat_mening_playlistlarim(
             for row in rows
         ]
     except Exception as err:
-        return {"message": "Xatolik yuz berdi", "error": str(err)}
+        return {"message": "Xatolik yuz berdi !", "error": str(err)}
 
 
 @playlist_router.get("/get_playlist")
@@ -92,7 +92,7 @@ async def barcha_korishi_mumkin(db: AsyncSession = Depends(database)):
             for row in rows
         ]
     except Exception as err:
-        return {"message": "Xatolik yuz berdi", "error": str(err)}
+        return {"message": "Xatolik yuz berdi !", "error": str(err)}
 
 
 @playlist_router.put("/put_playlist/{playlist_id}")
@@ -104,9 +104,9 @@ async def playlist_tahrirlash(
 ):
     try:
         await update_playlist(playlist_id, form, db, current_user)
-        return {"message": "Playlist tahrirlandi."}
+        return {"message": "Playlist tahrirlandi !"}
     except Exception as err:
-        return {"message": "Xatolik yuz berdi", "error": str(err)}
+        return {"message": "Xatolik yuz berdi !", "error": str(err)}
 
 
 @playlist_router.delete("/delete_playlist")
@@ -125,12 +125,12 @@ async def playlistni_ochirish(
 
         if not result:
             raise HTTPException(
-                404, "Sizda bunday playlist mavjud emas yoki ruxsat yo'q."
+                404, "Sizda bunday playlist mavjud emas yoki ruxsat yo'q !"
             )
 
         await db.execute(delete(Playlist).where(Playlist.id == ident))
         await db.commit()
-        return {"message": "Playlist o‘chirildi."}
+        return {"message": "Playlist o‘chirildi !"}
 
     except Exception as err:
-        return {"message": "Xatolik yuz berdi", "error": str(err)}
+        return {"message": "Xatolik yuz berdi !", "error": str(err)}

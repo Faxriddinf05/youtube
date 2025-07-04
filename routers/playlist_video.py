@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import update, delete
-
 from utils.database import database
 from models.playlist_video import PlaylistVideo
 from models.video import Video
@@ -24,7 +23,7 @@ async def playlist_video_qoshish(
 ):
     try:
         await create_playlist_video(form, db, current_user)
-        return {"message": "Video yuklandi."}
+        return {"message": "Video yuklandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -62,7 +61,7 @@ async def playlist_videoni_korish(
             for row in rows
         ]
     except Exception as err:
-        return {"message": "Xatolik yuz berdi", "error": str(err)}
+        return {"message": "Xatolik yuz berdi !", "error": str(err)}
 
 
 @playlist_video_router.get("/get_playlist_video")
@@ -93,7 +92,7 @@ async def playlist_videoni_korish_barcha_uchun(db: AsyncSession = Depends(databa
             for row in rows
         ]
     except Exception as err:
-        return {"message": "Xatolik yuz berdi", "error": str(err)}
+        return {"message": "Xatolik yuz berdi !", "error": str(err)}
 
 
 @playlist_video_router.delete("/delete_playlist_video")
@@ -114,12 +113,12 @@ async def playlist_videoni_ochirish(
 
         if not video:
             raise HTTPException(
-                404, "Sizda bunday playlist video mavjud emas yoki ruxsat yo'q."
+                404, "Sizda bunday playlist video mavjud emas yoki ruxsat yo'q !"
             )
 
         await db.execute(delete(PlaylistVideo).where(PlaylistVideo.id == ident))
         await db.commit()
-        return {"message": "Playlist video o'chirildi."}
+        return {"message": "Playlist video o'chirildi !"}
 
     except Exception as err:
-        return {"message": "Xatolik yuz berdi", "error": str(err)}
+        return {"message": "Xatolik yuz berdi !", "error": str(err)}

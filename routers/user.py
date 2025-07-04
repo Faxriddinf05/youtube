@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, UploadFile, HTTPException
 from sqlalchemy import delete
-
 from sqlalchemy.future import select
 from utils.database import database
 from models.user import User
@@ -16,27 +15,27 @@ user_router = APIRouter()
 async def royxatdan_otish(form: SchemasUser, db: AsyncSession = Depends(database)):
     try:
         await create_user(form, db)
-        return {"message": "Foydananuvchi qoshildi."}
+        return {"message": "Foydananuvchi qo'shildi !"}
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
 
 
 @user_router.post("/post_image")
-async def rasim_yuklash(
+async def rasm_yuklash(
     image: UploadFile,
     db: AsyncSession = Depends(database),
     current_user: SchemasUser = Depends(get_current_active_user),
 ):
     try:
         await create_photo(image, db, current_user)
-        return {"message": "Rasim yuklandi."}
+        return {"message": "Rasm yuklandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
 
 
 @user_router.get("/get_user")
-async def royxad_korish(
+async def royxat_korish(
     db: AsyncSession = Depends(database),
     current_user: SchemasUser = Depends(get_current_active_user),
 ):
@@ -44,7 +43,7 @@ async def royxad_korish(
     result = user.scalar()
 
     if not result:
-        raise HTTPException(404, "Foydalanuvchi topilmadi")
+        raise HTTPException(404, "Foydalanuvchi topilmadi !")
 
     return UserResponse(
         username=result.username,
@@ -57,28 +56,28 @@ async def royxad_korish(
 
 
 @user_router.put("/put_user")
-async def royxad_tahrirlash(
+async def royxat_tahrirlash(
     form: SchemasUser,
     db: AsyncSession = Depends(database),
     current_user: SchemasUser = Depends(get_current_active_user),
 ):
     try:
         await update_user(form, db, current_user)
-        return {"message": "Foydalanuvchi tahrirlandi."}
+        return {"message": "Foydalanuvchi tahrirlandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
 
 
 @user_router.put("/put_image")
-async def rasim_tahrirlash(
+async def rasm_tahrirlash(
     image: UploadFile,
     db: AsyncSession = Depends(database),
     current_user: SchemasUser = Depends(get_current_active_user),
 ):
     try:
         await update_photo(image, db, current_user)
-        return {"message": "Rasim tahrirlandi."}
+        return {"message": "Rasm tahrirlandi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -92,7 +91,7 @@ async def foydalanuvchi_ochirish(
     try:
         await db.execute(delete(User).where(User.id == current_user.id))
         await db.commit()
-        return {"message": "Foydalanuvchi ochirildi."}
+        return {"message": "Foydalanuvchi o'chirildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}

@@ -1,6 +1,5 @@
 from fastapi import HTTPException
 from datetime import datetime, timezone
-
 from utils.save_video import video_upload
 from sqlalchemy.future import select
 from models.shorts import Shorts
@@ -13,7 +12,7 @@ async def create_shorts(video, db, current_user):
     channel = result.scalar_one_or_none()
 
     if not channel:
-        raise HTTPException(403, "Siz ushbu kanalga shorts yuklay olmaysiz.")
+        raise HTTPException(403, "Siz ushbu kanalga shorts yuklay olmaysiz !")
 
     video_url, thumbnail_path = await video_upload(video)
     now = datetime.now(timezone.utc)

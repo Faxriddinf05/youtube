@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from sqlalchemy import update
-
 from models.like import Like
 from models.video import Video
 from utils.check import check_video, check_like

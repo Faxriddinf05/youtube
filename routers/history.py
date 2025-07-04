@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import delete
-
 from models.history import History
 from models.channel import Channel
 from models.video import Video
@@ -18,7 +17,7 @@ from utils.check import check_history
 history_router = APIRouter()
 
 
-@history_router.post("/post_histor")
+@history_router.post("/post_history")
 async def tarix_qoshish(
     form: SchemasHistory,
     db: AsyncSession = Depends(database),
@@ -26,7 +25,7 @@ async def tarix_qoshish(
 ):
     try:
         await cretae_history(form, db, current_user)
-        return {"message": "History qoshildi."}
+        return {"message": "History qo'shildi !"}
 
     except Exception as err:
         return {"message": "Xatolik bor!", "Error": str(err)}
@@ -82,4 +81,4 @@ async def tarixni_tozalash(
         return {"message": "Tarix muvaffaqiyatli o'chirildi."}
 
     except Exception as err:
-        return {"message": "Xatolik yuz berdi", "error": str(err)}
+        return {"message": "Xatolik yuz berdi !", "error": str(err)}

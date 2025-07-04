@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from sqlalchemy import update
-
 from sqlalchemy.future import select
 from utils.save_image import save_image
 from models.user import User

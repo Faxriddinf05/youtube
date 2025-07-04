@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from sqlalchemy import update
-
 from models.video import Video
 from sqlalchemy.future import select
 from models.history import History

@@ -1,12 +1,9 @@
 from fastapi import HTTPException
-
 from sqlalchemy.future import select
 from models.video import Video
 from models.playlist import Playlist
 from models.playlist_video import PlaylistVideo
 from utils.check import check_video
-
-
 from sqlalchemy import select
 from models.channel import Channel
 
@@ -21,7 +18,7 @@ async def create_playlist_video(form, db, current_user):
     playlist = result.scalar_one_or_none()
 
     if not playlist:
-        raise HTTPException(403, "Siz ushbu playlistga video yuklay olmaysiz.")
+        raise HTTPException(403, "Siz ushbu playlistga video yuklay olmaysiz !")
 
     await check_video(db, Video, form)
 
