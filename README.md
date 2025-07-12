@@ -1,1 +1,1 @@
-Backend kursni bitirdik va ilk loyihamiz sifatida ushbu YouTube loyihasini qildik. Ammo barcha ishni sherigim Nurzotbek qildi. Ustozim T.Xurshid aka bilan birgalikda. Frontend sherigimiz A.Hudoberdi ham ba'zi tavsiyalarni berdi
+Backend kursni bitirdik va ilk loyihamiz sifatida ushbu YouTube loyihasini qilyabmiz
